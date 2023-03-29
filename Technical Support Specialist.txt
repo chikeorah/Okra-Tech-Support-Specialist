@@ -1,0 +1,72 @@
+Section 1: Non-technical
+
+I would follow the steps below to understand the issues the merchant is facing with their integration.
+1. Find out the exact issues Codak Ventures has by going through Okra logs, if available.
+2. Confirm the errors I see in the logs are the same as the merchant dev team is getting.
+3. Simulate this same error on the test/sandbox environment and ensure I am passing the correct data and credentials. If it is not an issue with the data and credentials, I move to the next step. 
+4. Check If the issue is a configuration issue. If yes, put the correct configuration on the test/sandbox environment and run the necessary test to guarantee the issues are resolved.
+5. If the issue requires the Okra software development team to resolve it, communicate the issues and get the timeline to resolve the issue from the Engineering Manager and Product Manager.
+
+Since Peter, the salesperson has some relationship with the merchant I would ensure I carry him along while communicating with the merchant. My first communication with the client would be to confirm the errors they are getting with their integration. After troubleshooting and finding out the point of failure, I would then inform them what exactly needs to be done to resolve the issues with their integration.
+
+If the issue requires the Okra software development team to resolve it, then I would be communicating the timelines first to Peter before reaching out to the merchant. Peter might need to speak with necessary stakeholders on the merchant side and give necessary assurances before I officially communicate with the merchant dev team.
+
+It is also important to proactively check all merchant transactions regularly or have systems in place to monitor and flag any recurring errors so I can catch integration issues early and notify the merchant with a resolution guide. This helps to improve merchants' confidence in Okra's system and also helps me to build a relationship with the merchant dev team which can always be leveraged when needed.
+
+
+Section 2: Semi technical
+
+1. Good morning, Jesse. 
+Thank you for reaching out to Okra. 
+Kindly confirm if the customer has transactions beyond a week. Also, note that the Get transaction by Id API returns a paginated list of transactions for a customer. You can see the API documentation for more details, https://docs.okra.ng/reference/gettransactionbyid.
+Please let me know if you have any more questions.
+Do have a great day.
+
+2. Good day, Mike.
+Thank you for reaching out to Okra.
+You can programmatically indicate whether the connection was successful or threw an error by handling events. We currently support callbacks like onSuccess, onError, onClose and onEvent. Kindly refer to the Widget events page, https://docs.okra.ng/docs/widget-options.
+I would also suggest you go through this video, https://youtu.be/zwW-fg0qtRw as it would help with your integration.
+Please let me know if you have any more questions.
+Do have a great day.
+
+3. Good afternoon, Blessing.
+Thank you for reaching out to Okra.
+Please note that you would require an account to be able to test Okra. You can create one by going to https://dash.okra.ng/register to create an account if you have not.
+Okra has a starter plan that allows you to make 100 free API calls which you can use for your tests. Our plans and billing section on the dashboard, https://dash.okra.ng/settings/billing/history?page=1 allows you to see other plans available.
+You can refer to our documentation, https://docs.okra.ng/docs as you test the system. We are available to support you through the integration process, so feel free to reach out to me if you have any integration questions.
+Do have a great day.
+
+
+Section 3: Technical
+
+Problem 1
+I used https://api.okra.ng/v2/products/auths as the endpoint for this test.
+
+The API took over one minute to return 700115 lines of JSON response. The customer is likely having issues because the endpoint takes too long to return a response and the response is too large.
+
+The exact time to get a response from the API on Postman is 1m 5.16s and the response size is 12.23MB. If the response is paginated and returned in bits, this might help the customer.
+
+I tried passing limit:1 via Postman as can be seen on the documentation but the same large response message.
+
+Testing the API on the Okra documentation page returns a smaller response even when I pass in 0 as the limit. I would forward this issue to the engineering team with my postman logs so they can simulate and fix the issue while the customer is notified of the timeline required to fix this is communicated with the customer.
+
+
+Problem 2
+
+I used https://api.okra.ng/v2/identity/getByDate as the endpoint for this test.
+
+I got an HTTP error 422, Unprocessable Entity
+{
+    "status": "error",
+    "message": "to is required and from is required",
+    "data": {}
+}
+
+The customer is getting an HTTP error 422 because the customer is not passing the correct form data required by the endpoint.
+
+Looking at the documentation, the endpoint requires a from and to date to be passed. I would inform the customer to pass the correct data, sharing a sample like the one below with them.
+
+{
+	"from": "2023-01-01",
+    "to": "2023-03-01"
+}
